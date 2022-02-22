@@ -2,40 +2,44 @@
 import '../../styles/resultWeather.sass';
 
 export const ResultWeather = ({data}) => {
+
+  console.log(data)
   return (
-    <div className="container__data">
-        <div className="top">
+    <div className="container">
+      <div className="container__informacion">
+
+        <div className="data__central">
+          <img src={`http://openweathermap.org/img/wn//${data.weather[0].icon}@4x.png`} alt="weather icon" class="w-icon"/>
           <div className="location">
-            <p>{data.name}</p>
+            <h2>{data.name}</h2>
           </div>
           <div className="temp">
             {data.main ? <h1>{data.main.temp.toFixed()}°C</h1> : null}
-          </div>
-          <div className="description">
-            {data.weather ? <p>{data.weather[0].main}</p> : null}
+            {data.weather ? <h2 className='weather_description-text'>{data.weather[0].description}</h2> : null}
           </div>
         </div>
 
         {data.name !== undefined && (
-          <div className="bottom">
-            <div className="feels">
-              <p>Feels Like</p>
+          <div className="container__segunda-informacion">
+            <div className="container__sensaciontermica information">
+              <p className='information-title'>Sensacion Termica:</p>
               {data.main ? (
-                <p className="bold">{data.main.feels_like.toFixed()}°C</p>
+                <p className="sensaciontermica ">{data.main.feels_like.toFixed()}°C</p>
               ) : null}
             </div>
-            <div className="humidity">
-              <p>Humedad</p>
-              {data.main ? <p className="bold">{data.main.humidity}%</p> : null}
+            <div className="container__humedad information">
+              <p className='information-title'>Humedad: </p>
+              {data.main ? <p className="humedad">{data.main.humidity}%</p> : null}
             </div>
-            <div className="wind">
-              <p>Velocidad del viento</p>
+            <div className="container__windy information">
+              <p className='information-title'>Velocidad del viento: </p>
               {data.wind ? (
-                <p className="bold">{data.wind.speed.toFixed()} MPH</p>
+                <p className="windy">{data.wind.speed.toFixed()} MPH</p>
               ) : null}
             </div>
           </div>
         )}
+        </div>
       </div>
   )
 }
