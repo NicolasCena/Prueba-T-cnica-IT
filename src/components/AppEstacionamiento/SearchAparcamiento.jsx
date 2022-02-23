@@ -23,18 +23,19 @@ export const SearchAparcamiento = () => {
         llamadaApi()
     }, [])
 
+
+
+
     
   return (
     <>
-
     {
         aparcamientos === null ? 'null' 
         :
         (
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
+            <table className="table table-dark table-striped text-center">
+                <thead >
+                    <tr >
                         <th scope="col">Name</th>
                         <th scope="col">Direccion</th>
                         <th scope="col">Ir</th>
@@ -43,7 +44,7 @@ export const SearchAparcamiento = () => {
                 <tbody>
             {
                 aparcamientos[1].map((info, index) => (
-                    <Aparcamiento key={index} info={info}/>
+                    <Aparcamiento key={index} info={info} />
                 ))
             }
                 </tbody>
