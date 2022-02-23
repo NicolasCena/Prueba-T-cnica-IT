@@ -2,9 +2,9 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 //Components
-import { DataApiClima } from '../components/AppClima/DataApiClima'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
+import { AppClima } from './AppClima'
 
 
 export const Navigation = () => {
@@ -12,7 +12,7 @@ export const Navigation = () => {
     <BrowserRouter>
         <Header/>
         <Routes>
-            <Route path="/AppClima" element={ <DataApiClima/> }/>
+            <Route path="/AppClima" element={ <AppClima/> }/>
         </Routes>
         <Footer/>
     </BrowserRouter>
