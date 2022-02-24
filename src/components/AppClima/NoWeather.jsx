@@ -1,6 +1,6 @@
 
 import '../../styles/noWeather.sass'
-import NoWeatherImage from './NoWeatherImage.png'
+import NoWeatherImage from '../../assets/NoWeatherImage.png'
 
 export const NoWeather = () => {
   return (
