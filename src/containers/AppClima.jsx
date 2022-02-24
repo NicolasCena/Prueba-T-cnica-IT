@@ -11,6 +11,7 @@ export const AppClima = () => {
 const [ weather, setWeather] = useState([]);
 const [ location, setLocation] = useState("");
 const [ error, setError ] = useState("");
+const [ flag, setFlag ] = useState(false);
 
 const URLBUSQUEDA = `https://api.openweathermap.org/data/2.5/weather?appid=f007a3c9ee92c1b7b37a2f177f6f083b&q=${location}&units=metric&lang=es`;
 const URLSTANDAR = `https://api.openweathermap.org/data/2.5/weather?appid=f007a3c9ee92c1b7b37a2f177f6f083b&q=uruguay&units=metric&lang=es`;
@@ -21,7 +22,7 @@ const searchLocation = () => {
     .then((response) => {
     setWeather(response.data)
     localStorage.setItem("weather", JSON.stringify(response.data))
-
+    setFlag(false)
   })
   } catch (error) {
     setError(error)
@@ -36,24 +37,25 @@ const Llamada = () => {
     setWeather(clima)
   }
   else{
-    const searchLocationTwo = () => {
-      try {
-        axios.get(URLSTANDAR)
-        .then((response) => {
-        setWeather(response.data)
-      })
-      } catch (error) {
-        setError(error)
-      }
-    }
-    searchLocationTwo()
-  }
+  setFlag(true)
 }
-
+}
 useEffect(() => {
   Llamada()
 }, [])
 
+// const searchLocationTwo = () => {
+//   try {
+//     axios.get(URLSTANDAR)
+//     .then((response) => {
+//     setWeather(response.data)
+//   })
+//   } catch (error) {
+//     setError(error)
+//   }
+// }
+// searchLocationTwo()
+// }
 
   return (
     <SearchWeather
@@ -62,6 +64,7 @@ useEffect(() => {
     setWeather={setWeather} 
     location={location}
     searchLocation={searchLocation}
+    flag={flag}
     />
   )
 }

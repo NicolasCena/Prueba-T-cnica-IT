@@ -20,7 +20,7 @@ export const SearchAparcamiento = () => {
         }
     }
 
-    const VerificarGeo = () => {
+    const verificarGeo = () => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 setState({
@@ -39,8 +39,8 @@ export const SearchAparcamiento = () => {
 
 
     useEffect(() => {
+        verificarGeo()
         llamadaApi()
-        VerificarGeo()
     }, [])
 
 
