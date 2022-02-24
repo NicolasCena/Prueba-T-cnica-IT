@@ -1,8 +1,9 @@
 import React from "react";
 import { ResultWeather } from "./ResultWeather";
+import { NoWeather } from "./NoWeather";
 import '../../styles/searchWeather.sass';
 
-export const SearchWeather = ({weather, setLocation, location,searchLocation}) => {
+export const SearchWeather = ({weather, setLocation, location,searchLocation, flag}) => {
   
   return (
     <div className="SearchWeather__container">
@@ -18,9 +19,10 @@ export const SearchWeather = ({weather, setLocation, location,searchLocation}) =
         <button onClick={(location) => searchLocation(location)}>Buscar</button>
       </div>
       {
-        weather !== undefined ? 
-          <ResultWeather weather={weather}/> :
-        <h1>Busca el clima en alguna región</h1>
+        flag === true ? 
+            <NoWeather />
+           :
+           <ResultWeather weather={weather}/>
       }
       
     </div>
