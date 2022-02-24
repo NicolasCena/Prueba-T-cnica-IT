@@ -1,50 +1,71 @@
 import React, { useState, useEffect} from 'react'
 import { Aparcamiento } from './Aparcamiento'
+import { Loading } from '../Loading'
 
 export const SearchAparcamiento = () => {
-
     const [aparcamientos, setAparcamientos] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [errormes, setError] = useState(null)
+    const [errorLlamada, setErrorLlamada] = useState('')
+    const [errorGeo, setErrorGeo] = useState('')
+    const [ state, setState ] = useState([])
 
     const llamadaApi = () => {
         try {
         fetch('https://cors-anywhere.herokuapp.com/https://datos.madrid.es/egob/catalogo/202625-0-aparcamientos-publicos.json')
-        .then(response => response.json())
-        .then(data => {
-        setAparcamientos(Object.values(data))
-        })
+            .then(response => response.json())
+            .then(data => {
+            setAparcamientos(Object.values(data))
+            })
         } catch (error) {
-            setError(error)
+            setErrorLlamada(error)
         }
     }
 
+    const VerificarGeo = () => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setState({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                })
+            },
+            (error) => {
+                setErrorGeo(error)
+            },
+            {
+                enableHighAccuracy: true,
+            }
+        )
+    }
+
+
     useEffect(() => {
         llamadaApi()
+        VerificarGeo()
     }, [])
-
 
 
 
     
   return (
-    <>
+    <div>
     {
-        aparcamientos === null ? 'null' 
+        aparcamientos === null ? <Loading/>
         :
         (
-            <table className="table table-dark table-striped text-center">
+            <table className="table table-dark table-striped text-center ">
                 <thead >
                     <tr >
                         <th scope="col">Name</th>
-                        <th scope="col">Direccion</th>
-                        <th scope="col">Ir</th>
+                        <th scope="col" >Direccion</th>
+                        {
+                            errorGeo ?  null : (<th scope="col">Distancia</th>)
+                        }
                     </tr>
                 </thead>
                 <tbody>
             {
                 aparcamientos[1].map((info, index) => (
-                    <Aparcamiento key={index} info={info} />
+                    <Aparcamiento key={index} info={info} state={state} errorGeo={errorGeo}/>
                 ))
             }
                 </tbody>
@@ -52,6 +73,6 @@ export const SearchAparcamiento = () => {
         )       
 
     }
-    </>
+    </div>
   )
 }
